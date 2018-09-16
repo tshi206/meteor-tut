@@ -1,25 +1,62 @@
 <head>
-  <title>meteor-tut</title>
+    <title>meteor-tut</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
-  {{> info}}
+    <div class="container">
+        <header>
+            <h1>Monthly Resolutions</h1>
+
+            <label class="hide-finished">
+                <input type="checkbox" checked="{{hideFinished}}">
+                Hide Finished Resolutions
+            </label>
+
+            {{#if currentUser}}
+            <form class="new-resolution">
+                <input type="text" name="title" title="title" placeholder="A new resolution">
+                <input type="submit" value="Submit">
+            </form>
+            {{/if}}
+        </header>
+
+        <ul>
+            {{#each resolutions }}
+                {{> resolution }}
+            {{/each}}
+        </ul>
+
+        {{> loginButtons }}
+    </div>
+
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="resolution">
+    <li class="{{#if checked}}checked{{/if}}">
+        {{#if isOwner}}
+        <input type="checkbox" checked="{{ checked }}" title="checked" class="toggle-checked">
+            <button class="toggle-private">
+                {{#if isPrivate}}
+                    Private
+                {{else}}
+                    Public
+                {{/if}}
+            </button>
+        {{/if}}
+        <span class="text">{{ title }}</span>
+        {{#if isOwner}}
+            <button class="delete">Remove</button>
+        {{/if}}
+    </li>
 </template>
 
 <template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
-  </ul>
+    <h2>Learn Meteor!</h2>
+    <ul>
+        <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
+        <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
+        <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
+        <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
+    </ul>
 </template>
